@@ -29,7 +29,7 @@ then
     exit 1 #other than 0
 fi
 
-dpkg --get-installed | grep mysql &>>$LOG_FILE_NAME
+dpkg --get-selections | grep mysql &>>$LOG_FILE_NAME
 
 if [ $? -ne 0 ]
 then # not installed
@@ -40,7 +40,7 @@ else
 fi
 
 
-dpkg --get-installed | grep git &>>$LOG_FILE_NAME
+dpkg --get-selections | grep git &>>$LOG_FILE_NAME
 
 if [ $? -ne 0 ]
 then
