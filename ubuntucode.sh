@@ -29,7 +29,7 @@ then
     exit 1 #other than 0
 fi
 
-dpkg --get-selections | grep mysql &>>"$LOG_FILE_NAME"
+dpkg --get-selections | grep mysql-client-core-8.0 &>>"$LOG_FILE_NAME"
 
 if [ $? -ne 0 ]
 then # not installed
