@@ -6,13 +6,13 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-LOGS_FOLDER="/var/log/shellscript-logs"
+LOGS_FOLDER="/root/log"
 LOG_FILE=$(echo "$0" | cut -d "." -f1 )
 TIMESTAMP=$(date +%Y-%m-%d-%H-%M-%S)
 LOG_FILE_NAME="$LOGS_FOLDER/$LOG_FILE-$TIMESTAMP.log"
 
 VALIDATE(){
-    if [ "$1" -ne 0 ]
+    if [ $1 -ne 0 ]
     then
         echo -e "$2 ... $R FAILURE $N"
         exit 1
@@ -21,30 +21,30 @@ VALIDATE(){
     fi
 }
 
-echo "Script started executing at: $TIMESTAMP" &>>"$LOG_FILE_NAME"
+echo "Script started executing at: $TIMESTAMP" >> "$LOG_FILE_NAME" 2>&1
 
-if [ "$USERID" -ne 0 ]
+if [ $USERID -ne 0 ]
 then
     echo "ERROR:: You must have sudo access to execute this script"
     exit 1 #other than 0
 fi
 
-dpkg --get-selections | grep mysql-client-core-8.0 &>>"$LOG_FILE_NAME"
+dpkg --get-selections | grep mysql-client-core-8.0 >> "$LOG_FILE_NAME" 2>&1
 
 if [ $? -ne 0 ]
 then # not installed
-    apt install mysql -y &>>"$LOG_FILE_NAME"
+    apt install mysql-client-core-8.0 -y >> "$LOG_FILE_NAME" 2>&1
     VALIDATE $? "Installing MySQL"
 else
     echo -e "MySQL is already ... $Y INSTALLED $N"
 fi
 
 
-dpkg --get-selections | grep git &>>"$LOG_FILE_NAME"
+dpkg --get-selections | grep git >> "$LOG_FILE_NAME" 2>&1
 
 if [ $? -ne 0 ]
 then
-    apt install git -y &>>"$LOG_FILE_NAME"
+    apt install git -y >> "$LOG_FILE_NAME" 2>&1
     VALIDATE $? "Installing Git"
 else
     echo -e "Git is already ... $Y INSTALLED $N"
