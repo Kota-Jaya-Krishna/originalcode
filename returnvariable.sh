@@ -10,7 +10,7 @@ val=$(greeting)
 echo "Return Value Of the function is $val"
 
 
-###### both will work######
+###### both scripts will work######
 
 greeting() {
     str="Hello, $1"
